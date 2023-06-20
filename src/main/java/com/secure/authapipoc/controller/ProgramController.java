@@ -1,8 +1,3 @@
-/*
- * Canadian Tire Corporation, Ltd. Do not reproduce without permission in writing.
- * Copyright (c) 2022. Canadian Tire Corporation, Ltd. All rights reserved.
- */
-
 package com.secure.authapipoc.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.secure'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
 	sourceCompatibility = '17'
@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+	implementation files('authlib/auth-lib-poc-0.0.1-SNAPSHOT-plain.jar')
 	implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.1.0'
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -23,8 +24,6 @@ dependencies {
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
 }
 
 tasks.named('test') {

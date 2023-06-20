@@ -1,2 +1,24 @@
-spring.mvc.pathmatch.matching-strategy: ant_path_matcher
-server.port: 8181
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+      port: 8181
+app:
+  enable:
+    security: true
+auth:
+  service:
+    endpoint: ${PERMISSION_SERVICE}
+    get-user-path: /user
+    timeout: 30000
+    error-message: "{\"errorCode\": 401, \"errorMessage\": \"Please authenticate to use this resource!\"}"
+
+security:
+  urls:
+    open-urls:
+      - /swagger-ui.html
+      - /swagger-ui/**
+      - /swagger-resources/**
+      - /v3/api-docs/**
+      - /favicon.ico

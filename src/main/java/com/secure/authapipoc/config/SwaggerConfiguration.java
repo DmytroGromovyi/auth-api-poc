@@ -1,51 +1,34 @@
 package com.secure.authapipoc.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.List;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(title = "Auth API", version = "v1"),
+        servers = {@Server(url = "/", description = "Default Server URL")})
 public class SwaggerConfiguration {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String BEARER = "bearer";
+    private static final String JWT = "JWT";
 
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
-            .securityContexts(List.of(securityContext()))
-            .securitySchemes(List.of(apiKey()))
-            .select()
-            .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-            .paths(PathSelectors.any())
-            .build();
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-            .securityReferences(List.of(defaultAuth()))
-            .operationSelector(o -> o.requestMappingPattern()
-                .matches("/.*"))
-            .build();
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
-    }
-
-    private SecurityReference defaultAuth() {
-        return SecurityReference.builder()
-            .scopes(new AuthorizationScope[0])
-            .reference("JWT")
-            .build();
+    public OpenAPI customizeOpenAPI() {
+        final String securitySchemeName = "bearerAuth";
+        return new OpenAPI()
+                .addSecurityItem(new SecurityRequirement()
+                        .addList(securitySchemeName))
+                .components(new Components()
+                        .addSecuritySchemes(securitySchemeName, new SecurityScheme()
+                                .name(securitySchemeName)
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme(BEARER)
+                                .bearerFormat(JWT)));
     }
 }

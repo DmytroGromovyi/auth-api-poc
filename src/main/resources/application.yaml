@@ -9,7 +9,7 @@ app:
     security: true
 auth:
   service:
-    endpoint: ${PERMISSION_SERVICE}
+    endpoint: http://localhost:8081
     get-user-path: /user
     timeout: 30000
     error-message: "{\"errorCode\": 401, \"errorMessage\": \"Please authenticate to use this resource!\"}"
@@ -22,3 +22,7 @@ security:
       - /swagger-resources/**
       - /v3/api-docs/**
       - /favicon.ico
+logging:
+  level:
+    org:
+      springframework: DEBUG

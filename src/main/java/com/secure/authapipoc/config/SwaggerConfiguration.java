@@ -26,7 +26,7 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
             .securityContexts(List.of(securityContext()))
             .securitySchemes(List.of(apiKey()))
             .select()

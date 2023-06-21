@@ -10,13 +10,13 @@ public class RequestController {
 
 
     @GetMapping(value = "request/show")
-    @PreAuthorize("hasRole('Request.READ')")
+    @PreAuthorize("hasAuthority('Request.READ')")
     public String requestShow() {
         return "You can only see this request info!";
     }
 
     @PostMapping(value = "request/edit")
-    @PreAuthorize("hasRole('Request.EDIT')")
+    @PreAuthorize("hasAuthority('Request.EDIT')")
     public String requestEdit() {
         return "You can see and edit request info here!";
     }
